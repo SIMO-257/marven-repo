@@ -41,7 +41,7 @@ jobs:
           # Si vous utilisez SonarCloud, vous devez souvent spécifier l'organisation :
           # -Dsonar.organization=VOTRE_ORGANISATION_SONARCLOUD
           
-          mvn clean verify sonar:sonar -X \
+          mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:3.11.0.3013:sonar  \
             -Dsonar.host.url=${{ env.SONAR_HOST_URL }} \
             -Dsonar.login=${{ env.SONAR_TOKEN }}
             
