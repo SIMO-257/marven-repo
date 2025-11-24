@@ -5,7 +5,6 @@ on:
     branches:
       - main
 
-
 jobs:
   build:
     name: Build and analyze
@@ -14,34 +13,37 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          # Clones complets requis pour une analyse historique précise
+          fetch-depth: 0 
+          
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: 17
-          distribution: 'zulu' # Alternative distribution options are available.
+          distribution: 'zulu'
+          
       - name: Cache SonarQube packages
         uses: actions/cache@v4
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
-        # Ligne 35
+
+      # Cette étape effectue la construction (si nécessaire) et l'analyse SonarQube.
+      # L'analyse SonarQube DOIT être la dernière étape de compilation.
       - name: Build and analyze
+        # Les secrets sont stockés ici en tant que variables d'environnement
         env:
-          # Utilise le secret GitHub pour le jeton (ex: SONAR_TOKEN)
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} 
-          # Utilise le secret GitHub pour l'URL du serveur (ex: https://sonarcloud.io)
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }} 
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         run: |
-          # Utilise les variables d'environnement définies ci-dessus
-          # Le paramètre -Dsonar.host.url doit être l'URL PUBLIQUE du serveur
-          # Le paramètre -Dsonar.login doit être la valeur du jeton (secret)
-          mvn sonar:sonar \
+          # La commande 'mvn verify' exécute généralement les tests avant l'analyse.
+          # Si vous utilisez SonarCloud, vous devez souvent spécifier l'organisation :
+          # -Dsonar.organization=VOTRE_ORGANISATION_SONARCLOUD
+          
+          mvn verify sonar:sonar \
             -Dsonar.host.url=${{ env.SONAR_HOST_URL }} \
             -Dsonar.login=${{ env.SONAR_TOKEN }}
-            - name: Build and analyze
-              env:
-                SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-                SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-              run: mvn sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=squ_0b07d30c1bd9f0fe1aa3977e6397fc46a81a4fe0
+            
+          # Si vous utilisez SonarCloud et que vous n'avez pas de propriété d'organisation dans votre pom.xml:
+          # -Dsonar.organization=votre_organisation_github
