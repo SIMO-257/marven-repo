@@ -1,22 +1,28 @@
-<project>
-    <properties>
-        <sonar.projectKey>Projet0</sonar.projectKey>
-        
-        <sonar.projectName>Projet0</sonar.projectName>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    
+    <modelVersion>4.0.0</modelVersion> 
 
-        <sonar.maven.plugin.version>3.11.0.3922</sonar.maven.plugin.version> 
-        
-        </properties>
+    <groupId>com.votreentreprise.projet</groupId> 
+
+    <artifactId>Projet0-Application</artifactId> 
+
+    <version>1.0-SNAPSHOT</version> 
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <sonar.projectKey>Projet0</sonar.projectKey>
+    </properties>
 
     <build>
         <plugins>
             <plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
-                <version>${sonar.maven.plugin.version}</version>
-            </plugin>
-            
-            </plugins>
+                <version>3.11.0.3922</version> </plugin>
+        </plugins>
     </build>
 
-    </project>
+</project>
