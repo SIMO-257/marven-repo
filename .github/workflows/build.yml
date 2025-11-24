@@ -44,4 +44,4 @@ jobs:
               env:
                 SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
                 SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-              run: mvn sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=squ_0b07d30c1bd9f0fe1aa3977e6397fc46a81a4fe0
+              run: mvn sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=squ_0b07d30c1bd9f0fe1aa3977e6397fc46a81a4fe0
