@@ -26,14 +26,22 @@ jobs:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
-      - name: Cache Maven packages
-        uses: actions/cache@v4
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
+        # Ligne 35
       - name: Build and analyze
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=Mon-projet -Dsonar.projectName='squ_0b07d30c1bd9f0fe1aa3977e6397fc46a81a4fe0'
+          # Utilise le secret GitHub pour le jeton (ex: SONAR_TOKEN)
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} 
+          # Utilise le secret GitHub pour l'URL du serveur (ex: https://sonarcloud.io)
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }} 
+        run: |
+          # Utilise les variables d'environnement définies ci-dessus
+          # Le paramètre -Dsonar.host.url doit être l'URL PUBLIQUE du serveur
+          # Le paramètre -Dsonar.login doit être la valeur du jeton (secret)
+          mvn sonar:sonar \
+            -Dsonar.host.url=${{ env.SONAR_HOST_URL }} \
+            -Dsonar.login=${{ env.SONAR_TOKEN }}
+            - name: Build and analyze
+              env:
+                SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+                SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+              run: mvn sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=squ_0b07d30c1bd9f0fe1aa3977e6397fc46a81a4fe0
