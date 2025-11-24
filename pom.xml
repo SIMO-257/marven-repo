@@ -12,5 +12,13 @@
         <sonar.projectKey>mon-projet</sonar.projectKey>
         <sonar.projectName>Mon projet</sonar.projectName>
     </properties>
+         <build>
+    <plugins>
+        <plugin>
+            <groupId>org.sonarsource.scanner.maven</groupId>
+            <artifactId>sonar-maven-plugin</artifactId>
+            <version>3.11.0.3013</version> </plugin>
+    </plugins>
+         </build>
 
     </project>
