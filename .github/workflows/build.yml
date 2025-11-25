@@ -33,4 +33,10 @@ jobs:
       - name: Build and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=SIMO-257_marven-repo
+          SONAR_HOST_URL: https://sonarcloud.io  # Assurez-vous que le secret est défini ainsi
+        run: |
+          mvn -B verify \
+          org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+          -Dsonar.projectKey=Projet0 \
+          -Dsonar.projectName='Projet0' \
+          -Dsonar.organization=VOTRE_ID_ORGANISATION_SONARCLOUD
